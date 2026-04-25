@@ -59,8 +59,8 @@ newaction {
     Install Functionality
 --]]
 install_files = {}
-cmd_copyfile = os.is("windows") and { "xcopy", "/f /y /i" }    or { "cp", "-v" }
-cmd_copydir  = os.is("windows") and { "xcopy", "/e /f /y /i" } or { "cp", "-vr" }
+cmd_copyfile = os.ishost("windows") and { "xcopy", "/f /y /i" }    or { "cp", "-v" }
+cmd_copydir  = os.ishost("windows") and { "xcopy", "/e /f /y /i" } or { "cp", "-vr" }
 
 -- Gets the install command for the specified file
 function installcommand(file, destdir)
@@ -164,11 +164,11 @@ function dummyproject()
     flags { "NoPCH" }
 
     -- Dummy cpp file for Premake's generated none  project (bug workaround)
-    configuration "gmake"
+    filter "action:gmake*"
         kind "StaticLib"
         files { "src/shared/dummy.cpp" }
         
-    configuration {}
+    filter {}
 end
 
 --[[
@@ -184,10 +184,10 @@ solution "modloader"
     targetprefix "" -- no 'lib' prefix on gcc
     targetdir "bin"
     implibdir "bin"
+    staticruntime "On"
+    symbols "On" -- Produce symbols whenever possible for logging purposes
 
     flags {
-        "StaticRuntime",
-        "Symbols",          -- Produce symbols whenever possible for logging purposes
         "NoImportLib",      -- Mod Loader itself and it's plugins are dlls which exports some funcs but a implib isn't required
         --"NoRTTI", (std.data uses it now on handling.cpp)
         "NoBufferSecurityCheck"
@@ -214,26 +214,23 @@ solution "modloader"
         "src/shared",
     }
 
-    configuration "Debug*"
-        flags { "Symbols" }
+    filter "configurations:Debug*"
+        symbols "On"
         
-    configuration "Release*"
+    filter "configurations:Release*"
         defines { "NDEBUG" }
         optimize "Speed"
 
-    configuration "gmake"
+    filter "action:gmake*"
         buildoptions { "-std=gnu++14", "-Wno-deprecated" }
-    configuration "vs*"
+
+    -- Visual Studio 2017+ (v141_xp)
+    filter "action:vs*"
+        toolset "v141_xp"
         buildoptions { "/arch:IA32" }           -- disable the use of SSE/SSE2 instructions (old game, old computers)
         buildoptions { "/Zm250", "/bigobj" }    -- gta3.std.data is a monster
-
-    configuration "vs2012"
-        toolset "v110_xp"
-    configuration "vs2013"
-        toolset "v120_xp"
-    configuration "vs2015"
-        toolset "v140_xp"
-        buildoptions { "/Zc:threadSafeInit-" }
+        buildoptions { "/Zc:threadSafeInit-" }  -- threadSafeInit not available in WinXP
+    filter {}
 
     project "docs"
         dummyproject()
@@ -272,8 +269,9 @@ solution "modloader"
     project "shared"
         dummyproject()
         setupfiles "src/shared"
-        configuration { "gmake" }
+        filter "action:gmake*"
             includedirs { "src/shared/stdinc" } -- gmake compatibility since it'll compile the dummyproject
+        filter {}
 
 
     local gta3_plugins = {  -- ordered by time taken to compile

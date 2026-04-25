@@ -10,18 +10,18 @@ Still not sure? Check out [this](https://www.youtube.com/watch?v=TvRpQa8dJ7E) ni
 
 Requirements:
 
-+ [Premake 5](http://industriousone.com/premake/download) *(pre-built executable available in this repository root)*
-+ [Visual Studio](http://www.visualstudio.com/downloads) 2013 or greater.
++ [Premake 5](https://premake.github.io/download/) *(install with `winget install -e --id Premake.Premake.5.Beta`, or download from the official website)*
++ [Visual Studio](https://www.visualstudio.com/downloads) 2017 or greater.
++ [Windows XP Platform Toolset](https://learn.microsoft.com/en-us/cpp/build/configuring-programs-for-windows-xp) is required; add it from Visual Studio’s Individual Components Installer if needed.
 
 Run the following command in the root of this directory to generate the project files:
 
-    premake5 vs2013
+    premake5 vs2022
 
 You can install the generated binaries into your game directory by running:
 
     premake5 install "C:/Program Files (x86)/Rockstar Games/GTA San Andreas"
 
-Or, you might want the files to be automatically installed everytime you build the solution:
+Or, you might want the files to be automatically installed every time you build the solution:
  
-    premake5 vs2013 "--idir=C:/Program Files (x86)/Rockstar Games/GTA San Andreas"
-
+    premake5 vs2022 "--idir=C:/Program Files (x86)/Rockstar Games/GTA San Andreas"
