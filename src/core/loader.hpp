@@ -558,7 +558,6 @@ class Loader : public modloader_t
         bool Patch();
         
         // Start or Shutdown the loader
-        void InitFromEntryPoint();
         void Startup();
         void Shutdown();
         

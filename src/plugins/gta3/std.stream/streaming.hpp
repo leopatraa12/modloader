@@ -249,7 +249,6 @@ class CAbstractStreaming
         void InitialiseStructAbstraction();
         const LibF92LA& GetF92LA();
         void Patch();
-        void PatchDelayed();
         void DataPatch();
         void InitRefreshInterface();
         void ShutRefreshInterface();
