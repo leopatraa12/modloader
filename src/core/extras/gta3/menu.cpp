@@ -610,7 +610,7 @@ void TheMenu::ModPageEvents()
     // Helper function to setup a integer priority entry in the menu
     auto SetupPriorityEntry = [this](const char* label, uint32_t& priority, std::function<void(MenuEntry&)> cb) -> std::function<bool(ActionInfo&)>
     {
-        const uint32_t min = 0, max = loader.mods.GetPriorityLimit(), step = 1;
+        const uint32_t min = 0, step = 1;
 
         auto PriorityLabel = [](const uint32_t& priority)
         {
@@ -627,8 +627,9 @@ void TheMenu::ModPageEvents()
             auto fInitStates = entry->SetupStatefulEntry(
                 std::ref(priority),
                 std::ref(PriorityLabel),
-                [min, max, step](const uint32_t& value, ActionInfo& info)
+                [min, step](const uint32_t& value, ActionInfo& info)
                 {
+                    const uint32_t max = loader.mods.GetPriorityLimit();
                     return std::min(std::max((value + step * info.wheel), min), max);
                 }
             );
