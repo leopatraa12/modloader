@@ -82,8 +82,9 @@ std::string CAbstractStreaming::TryLoadNonStreamedResource(std::string filepath,
 
     if(!this->bHasInitializedStreaming)
     {
-        auto it = this->raw_models.find(filename);
-        if(it != this->raw_models.end())
+        const auto range = this->raw_models.equal_range(filename);
+        auto it = range.first;
+        if(it != range.second)
         {
             // Log about non streamed resource and make sure it's unique
             plugin_ptr->Log("Using non-streamed resource \"%s\"", it->second->filepath());
