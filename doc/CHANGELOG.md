@@ -1,3 +1,18 @@
+v0.3.9 (May 16 2026)
+-----------------------
+ * Added audio support for GTA III and Vice City [#135 — contributed by @CookiePLMonster]
+ * Improved FXT parser to trim trailing spaces similar to CLEO [#137 — contributed by @CookiePLMonster]
+ * Improved support for ASI plugins that open files during `DllMain` initialization [#137 — contributed by @CookiePLMonster]
+ * Improved the way paths are translated during the dance between CLEO, ASIs and EXE [#130 — contributed by @CookiePLMonster]
+ * Improved compatibility with handling limit adjusters [#137 — contributed by @CookiePLMonster]
+ * Improved compatibility with ZMenu [#122 — contributed by @TheComputerGuy96]
+ * Fixed issue where having `coach.dff|txd` from both `gta3.img` and `player.img` would load only one or the other [#120 — contributed by @rokuniichi]
+ * Fixed load screen crashes when having a corrupted data file cache [#129 — contributed by @Fabio3rs]
+ * Support for adjusting maximum mod priority in `modloader.ini` [#132 — contributed by @Fabio3rs]
+ * Support for arbitrarily named SCM scripts (e.g. `main_d.scm`) required by gtadebug [#130 — contributed by @CookiePLMonster]
+ * Support for `MAPZONE` definitions in GTA III [#130 — contributed by @CookiePLMonster]
+ * Continuous deployment pipeline [#133 — contributed by @Fabio3rs]
+
 v0.3.7 (Jan 20 2018)
 -----------------------
  * Fixed an original game bug causing CdStreamSync to deadlock randomly (included an export for other mods to check if this std.stream build is aware of this bug and fixes it).
