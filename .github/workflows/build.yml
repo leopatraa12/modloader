@@ -33,6 +33,7 @@ jobs:
 
       - name: Install v141_xp toolset
         shell: cmd
+        timeout-minutes: 15
         run: |
           "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\setup.exe" modify ^
             --passive --norestart ^
