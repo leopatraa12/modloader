@@ -13,7 +13,10 @@ permissions:
 
 jobs:
   build:
-    runs-on: windows-latest
+    # Pinned to windows-2022: windows-latest moved to Windows Server 2025 with
+    # VS 2026 (installed under ".../18/...") in June 2026, which breaks the
+    # hardcoded VS 2022 installPath below and doesn't ship the v141_xp toolset.
+    runs-on: windows-2022
 
     steps:
       - uses: actions/checkout@v4
