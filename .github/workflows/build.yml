@@ -25,9 +25,11 @@ jobs:
 
       - name: Install premake5
         run: |
-          winget install -e --id Premake.Premake.5.Beta --accept-source-agreements --accept-package-agreements --disable-interactivity
-          $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User')
-          echo "$((Get-Command premake5).Path | Split-Path -Parent)" >> $env:GITHUB_PATH
+          $url = "https://github.com/premake/premake-core/releases/download/v5.0.0-beta8/premake-5.0.0-beta8-windows.zip"
+          $dest = "$env:RUNNER_TEMP\premake5"
+          Invoke-WebRequest -Uri $url -OutFile "$env:RUNNER_TEMP\premake5.zip"
+          Expand-Archive -Path "$env:RUNNER_TEMP\premake5.zip" -DestinationPath $dest
+          echo $dest >> $env:GITHUB_PATH
 
       - name: Install v141_xp toolset
         shell: cmd
